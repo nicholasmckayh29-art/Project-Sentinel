@@ -98,9 +98,19 @@ def sync_price_snapshots(client, snapshot: dict[str, Any]) -> int:
                 "source": source,
             }
         )
-    if rows:
-        client.table("price_snapshots").insert(rows).execute()
-    return len(rows)
+    return bulk_insert_price_snapshots(client, rows)
+
+
+def bulk_insert_price_snapshots(client, rows: list[dict[str, Any]], *, batch_size: int = 500) -> int:
+    """Insert snapshot rows in batches. Returns total inserted."""
+    if not rows:
+        return 0
+    inserted = 0
+    for i in range(0, len(rows), batch_size):
+        batch = rows[i : i + batch_size]
+        client.table("price_snapshots").insert(batch).execute()
+        inserted += len(batch)
+    return inserted
 
 
 def sync_baselines(client, baselines: dict[str, Any]) -> int:

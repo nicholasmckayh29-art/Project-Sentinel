@@ -1,5 +1,6 @@
 "use client";
 
+import { WatchlistTrends } from "@/components/WatchlistTrends";
 import { createClient } from "@/lib/supabase/client";
 import { useCallback, useEffect, useState } from "react";
 
@@ -139,6 +140,11 @@ export function WatchlistManager() {
           ))}
         </div>
       </section>
+
+      <WatchlistTrends
+        watchedModelIds={Array.from(watchedModels)}
+        models={models}
+      />
     </div>
   );
 }
