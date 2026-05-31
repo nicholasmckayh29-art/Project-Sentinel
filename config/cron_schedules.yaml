@@ -1,0 +1,16 @@
+routines:
+  price_drop_hunter:
+    cron: "0 9 * * 1-5"
+    timezone: UTC
+    timeout_minutes: 10
+    script: scripts/run_price_hunter.py
+  release_radar:
+    cron: "0 12 * * 1,4"
+    timezone: UTC
+    timeout_minutes: 15
+    script: scripts/check_releases.py
+  stack_optimizer:
+    cron: "0 18 * * 5"
+    timezone: UTC
+    timeout_minutes: 10
+    script: scripts/generate_routing_config.py

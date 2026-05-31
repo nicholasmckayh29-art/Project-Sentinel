@@ -1,0 +1,7 @@
+{
+  "price_drop_threshold_pct": 15,
+  "quality_degradation_max_pct": -5,
+  "new_model_value_multiplier": 1.2,
+  "cyclical_revert_hours": 48,
+  "critical_drop_threshold_pct": 25
+}

@@ -1,0 +1,65 @@
+{
+  "workloads": [
+    {
+      "workload_id": "coding_assistant",
+      "name": "AI Coding Assistant",
+      "workload_type": "coding",
+      "characteristics": {
+        "avg_input_tokens": 5000,
+        "avg_output_tokens": 500,
+        "daily_volume": 10000,
+        "retry_rate": 0.05,
+        "caching_eligible": true,
+        "cache_hit_rate": 0.40,
+        "can_batch": false,
+        "quality_requirements": {
+          "min_benchmark_score": 0.75,
+          "requires_json_mode": true,
+          "requires_function_calling": true,
+          "latency_tolerance_ms": 3000
+        }
+      },
+      "tier": "tier_2_standard"
+    },
+    {
+      "workload_id": "bulk_processing",
+      "name": "Bulk Document Processing",
+      "workload_type": "general",
+      "characteristics": {
+        "avg_input_tokens": 2000,
+        "avg_output_tokens": 200,
+        "daily_volume": 50000,
+        "retry_rate": 0.02,
+        "caching_eligible": true,
+        "cache_hit_rate": 0.25,
+        "can_batch": true,
+        "quality_requirements": {
+          "min_benchmark_score": 0.65,
+          "requires_json_mode": false,
+          "requires_function_calling": false
+        }
+      },
+      "tier": "tier_3_bulk"
+    },
+    {
+      "workload_id": "customer_support",
+      "name": "Customer Support Agent",
+      "workload_type": "general",
+      "characteristics": {
+        "avg_input_tokens": 1500,
+        "avg_output_tokens": 300,
+        "daily_volume": 20000,
+        "retry_rate": 0.03,
+        "caching_eligible": true,
+        "cache_hit_rate": 0.35,
+        "can_batch": false,
+        "quality_requirements": {
+          "min_benchmark_score": 0.70,
+          "requires_json_mode": true,
+          "requires_function_calling": true
+        }
+      },
+      "tier": "tier_2_standard"
+    }
+  ]
+}

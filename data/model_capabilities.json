@@ -1,0 +1,49 @@
+{
+  "models": [
+    {
+      "model_id": "claude-sonnet-4-6",
+      "benchmarks": {"mmlu": 0.88, "human_eval": 0.82, "gsm8k": 0.90, "mbpp": 0.85},
+      "metadata": {"efficiency_ratio": 1.0, "successor_rumored": false}
+    },
+    {
+      "model_id": "claude-haiku-4-5-20251001",
+      "benchmarks": {"mmlu": 0.75, "human_eval": 0.70, "gsm8k": 0.78, "mbpp": 0.68},
+      "metadata": {"efficiency_ratio": 1.05}
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "benchmarks": {"mmlu": 0.82, "human_eval": 0.75, "gsm8k": 0.87, "mbpp": 0.72},
+      "metadata": {"efficiency_ratio": 1.1}
+    },
+    {
+      "model_id": "gpt-5-nano",
+      "benchmarks": {"mmlu": 0.80, "human_eval": 0.73, "gsm8k": 0.85, "mbpp": 0.70},
+      "metadata": {"efficiency_ratio": 1.0}
+    },
+    {
+      "model_id": "gemini-2.5-flash-lite",
+      "benchmarks": {"mmlu": 0.78, "human_eval": 0.68, "gsm8k": 0.82, "mbpp": 0.65},
+      "metadata": {"efficiency_ratio": 1.08}
+    },
+    {
+      "model_id": "deepseek-chat",
+      "benchmarks": {"mmlu": 0.84, "human_eval": 0.80, "gsm8k": 0.88, "mbpp": 0.78},
+      "metadata": {"efficiency_ratio": 1.0}
+    },
+    {
+      "model_id": "gpt-5.4",
+      "benchmarks": {"mmlu": 0.92, "human_eval": 0.88, "gsm8k": 0.95, "mbpp": 0.90},
+      "metadata": {"efficiency_ratio": 0.95}
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "benchmarks": {"mmlu": 0.85, "human_eval": 0.78, "gsm8k": 0.88, "mbpp": 0.74},
+      "metadata": {"efficiency_ratio": 1.0}
+    },
+    {
+      "model_id": "grok-4.1-fast",
+      "benchmarks": {"mmlu": 0.80, "human_eval": 0.72, "gsm8k": 0.84, "mbpp": 0.68},
+      "metadata": {"efficiency_ratio": 1.05}
+    }
+  ]
+}

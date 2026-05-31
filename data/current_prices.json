@@ -1,0 +1,1395 @@
+{
+  "fetched_at": "2026-05-31T05:27:04Z",
+  "source": "pricetoken.ai",
+  "model_count": 41,
+  "models": [
+    {
+      "model_id": "claude-haiku-4-5-20251001",
+      "provider": "anthropic",
+      "display_name": "Claude Haiku 4.5",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 200000,
+        "max_output_tokens": 64000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.75,
+        "human_eval": 0.7,
+        "gsm8k": 0.78,
+        "mbpp": 0.68
+      },
+      "metadata": {
+        "release_date": "2025-10-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.05,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "claude-opus-4-6",
+      "provider": "anthropic",
+      "display_name": "Claude Opus 4.7",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 25.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-02-05",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "claude-sonnet-4-6",
+      "provider": "anthropic",
+      "display_name": "Claude Sonnet 4.6",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 64000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.88,
+        "human_eval": 0.82,
+        "gsm8k": 0.9,
+        "mbpp": 0.85
+      },
+      "metadata": {
+        "release_date": "2026-02-17",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "deepseek-chat",
+      "provider": "deepseek",
+      "display_name": "DeepSeek-V4-Flash (non-thinking)",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 384000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.84,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78
+      },
+      "metadata": {
+        "release_date": "2025-12-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "deepseek-reasoner",
+      "provider": "deepseek",
+      "display_name": "DeepSeek-V4-Flash (thinking)",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 384000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-12-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-2.5-flash",
+      "provider": "google",
+      "display_name": "Gemini 2.5 Flash",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-06-17",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-2.5-flash-lite",
+      "provider": "google",
+      "display_name": "Gemini 2.5 Flash-Lite",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.78,
+        "human_eval": 0.68,
+        "gsm8k": 0.82,
+        "mbpp": 0.65
+      },
+      "metadata": {
+        "release_date": "2025-07-22",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.08,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "provider": "google",
+      "display_name": "Gemini 2.5 Pro",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-06-17",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-3-flash-preview",
+      "provider": "google",
+      "display_name": "Gemini 3 Flash Preview",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-12-17",
+        "status": "preview",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-3.1-flash-lite-preview",
+      "provider": "google",
+      "display_name": "Gemini 3.1 Flash-Lite Preview",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-03",
+        "status": "preview",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gemini-3.1-pro-preview",
+      "provider": "google",
+      "display_name": "Gemini 3.1 Pro Preview",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-02-19",
+        "status": "preview",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-4.1",
+      "provider": "openai",
+      "display_name": "GPT-4.1",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 32768,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-14",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-4.1-mini",
+      "provider": "openai",
+      "display_name": "GPT-4.1 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.6,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 32768,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-14",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-4.1-nano",
+      "provider": "openai",
+      "display_name": "GPT-4.1 Nano",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1000000,
+        "max_output_tokens": 32768,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-14",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-4o",
+      "provider": "openai",
+      "display_name": "GPT-4o",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 128000,
+        "max_output_tokens": 16384,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2024-05-13",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "provider": "openai",
+      "display_name": "GPT-4o Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 128000,
+        "max_output_tokens": 16384,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.82,
+        "human_eval": 0.75,
+        "gsm8k": 0.87,
+        "mbpp": 0.72
+      },
+      "metadata": {
+        "release_date": "2024-07-18",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.1,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5",
+      "provider": "openai",
+      "display_name": "GPT-5 Chat (Latest)",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-08-07",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5-mini",
+      "provider": "openai",
+      "display_name": "GPT-5 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-08-07",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5-nano",
+      "provider": "openai",
+      "display_name": "GPT-5 Nano",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.73,
+        "gsm8k": 0.85,
+        "mbpp": 0.7
+      },
+      "metadata": {
+        "release_date": "2025-08-07",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.1",
+      "provider": "openai",
+      "display_name": "GPT-5.1 Chat (Latest)",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-11-13",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.2",
+      "provider": "openai",
+      "display_name": "GPT-5.2 Chat (Latest)",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.75,
+        "output_per_1m": 14.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-12-11",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.3-chat-latest",
+      "provider": "openai",
+      "display_name": "GPT-5.3 Chat Latest",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.75,
+        "output_per_1m": 14.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 128000,
+        "max_output_tokens": 16384,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-03",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.3-codex",
+      "provider": "openai",
+      "display_name": "GPT-5.3 Codex",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.75,
+        "output_per_1m": 14.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-02-24",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.4",
+      "provider": "openai",
+      "display_name": "GPT-5.4",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1050000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9
+      },
+      "metadata": {
+        "release_date": "2026-03-05",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 0.95,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.4-mini",
+      "provider": "openai",
+      "display_name": "GPT-5.4 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 4.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-17",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.4-nano",
+      "provider": "openai",
+      "display_name": "GPT-5.4 Nano",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.25,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 400000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-17",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "gpt-5.4-pro",
+      "provider": "openai",
+      "display_name": "GPT-5.4 Pro",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 30.0,
+        "output_per_1m": 180.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 1050000,
+        "max_output_tokens": 128000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-05",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-3",
+      "provider": "xai",
+      "display_name": "Grok 3",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-09",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-3-mini",
+      "provider": "xai",
+      "display_name": "Grok 3 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-09",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-4",
+      "provider": "xai",
+      "display_name": "Grok 4",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 256000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-07-09",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-4.1-fast",
+      "provider": "xai",
+      "display_name": "Grok 4.1 Fast",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 2000000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-09",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-4.20",
+      "provider": "xai",
+      "display_name": "Grok 4.20",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 2000000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-03-09",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "grok-code-fast-1",
+      "provider": "xai",
+      "display_name": "Grok Code Fast 1",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 256000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2026-01-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "jamba-1.5-mini",
+      "provider": "ai21",
+      "display_name": "Jamba Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 256000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-06-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "jamba-large-1.7",
+      "provider": "ai21",
+      "display_name": "Jamba Large",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 256000,
+        "max_output_tokens": null,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-08-01",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "o3",
+      "provider": "openai",
+      "display_name": "o3",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 200000,
+        "max_output_tokens": 100000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-16",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "o3-mini",
+      "provider": "openai",
+      "display_name": "o3 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 200000,
+        "max_output_tokens": 100000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-01-31",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "o3-pro",
+      "provider": "openai",
+      "display_name": "o3 Pro",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 80.0,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 200000,
+        "max_output_tokens": 100000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-06-10",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "o4-mini",
+      "provider": "openai",
+      "display_name": "o4 Mini",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": true,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": true,
+        "batch_api": true
+      },
+      "limits": {
+        "context_window_tokens": 200000,
+        "max_output_tokens": 100000,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-04-16",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "low",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "qwen3-max",
+      "provider": "qwen",
+      "display_name": "Qwen3-Max",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.3472,
+        "output_per_1m": 1.3889,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 262144,
+        "max_output_tokens": 65536,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-09-23",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    },
+    {
+      "model_id": "qwq-32b",
+      "provider": "qwen",
+      "display_name": "QwQ-Plus",
+      "timestamp": "2026-05-31T05:27:04Z",
+      "pricing": {
+        "input_per_1m": 0.2222,
+        "output_per_1m": 0.5556,
+        "currency": "USD"
+      },
+      "capabilities": {
+        "vision": false,
+        "json_mode": true,
+        "function_calling": true,
+        "streaming": true,
+        "caching": false,
+        "batch_api": false
+      },
+      "limits": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": 8192,
+        "rate_limit_rpm": null
+      },
+      "benchmarks": {},
+      "metadata": {
+        "release_date": "2025-03-05",
+        "status": "active",
+        "successor_rumored": false,
+        "efficiency_ratio": 1.0,
+        "source_confidence": "high",
+        "data_source": "pricetoken.ai"
+      }
+    }
+  ]
+}
