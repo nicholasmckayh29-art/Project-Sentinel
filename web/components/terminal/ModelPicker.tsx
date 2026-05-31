@@ -34,7 +34,7 @@ export function ModelPicker({
       }
       const params = new URLSearchParams(searchParams.toString());
       if (next.length) params.set("models", next.join(","));
-      else params.delete("models");
+      else params.set("models", "");
       router.push(`/desk?${params.toString()}`, { scroll: false });
     },
     [selected, maxSelect, router, searchParams]
@@ -42,9 +42,8 @@ export function ModelPicker({
 
   const clearAll = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("models");
-    const q = params.toString();
-    router.push(q ? `/desk?${q}` : "/desk", { scroll: false });
+    params.set("models", "");
+    router.push(`/desk?${params.toString()}`, { scroll: false });
   }, [router, searchParams]);
 
   if (models.length === 0) {

@@ -56,6 +56,24 @@ export function mergeModelIds(explicit: string[], fromProviders: string[]): stri
   return [...new Set([...explicit, ...fromProviders])];
 }
 
+/** Absent `models` → default to watchlist; present but empty → user cleared selection. */
+export function parseDeskModelSelection(
+  modelsParam: string | undefined,
+  effectiveModelIds: string[],
+  maxSelect = 3
+): { selectedIds: string[]; explicitSelection: boolean } {
+  if (modelsParam === undefined) {
+    return {
+      selectedIds: effectiveModelIds.slice(0, maxSelect),
+      explicitSelection: false,
+    };
+  }
+  return {
+    selectedIds: modelsParam.split(",").filter(Boolean).slice(0, maxSelect),
+    explicitSelection: true,
+  };
+}
+
 export async function getPremiumStatus(
   supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>
 ): Promise<boolean> {

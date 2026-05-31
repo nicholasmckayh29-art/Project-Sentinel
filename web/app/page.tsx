@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandLogo } from "@/components/BrandLogo";
 import { TerminalPreview } from "@/components/terminal/TerminalPreview";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -27,6 +28,7 @@ export default function LandingPage() {
       {bootDone && (
         <div className="w-full space-y-8 animate-in fade-in duration-700">
           <div>
+            <BrandLogo href="/" height={72} className="mb-4" />
             <p className="badge-classified inline-block mb-4">CLEARANCE: PUBLIC</p>
             <h1 className="font-mono text-3xl md:text-4xl text-accent terminal-glow tracking-tight">
               AI MODEL INTELLIGENCE

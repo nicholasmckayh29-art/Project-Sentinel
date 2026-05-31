@@ -47,13 +47,7 @@ Supabase's **built-in email** allows only ~**4 magic links per hour** on the fre
 
 ### Optional: Google sign-in
 
-1. Supabase → **Authentication → Providers → Google** → Enable
-2. Create OAuth credentials in [Google Cloud Console](https://console.google.com/) (Web application)
-3. Authorized redirect URI: `https://eamkkmlpphsimvznjjcf.supabase.co/auth/v1/callback`
-4. Paste Client ID + Secret into Supabase
-5. Add your Vercel URL to Google **Authorized JavaScript origins**
-
-The login page includes a Google button once the provider is enabled.
+See [google-oauth-setup.md](./google-oauth-setup.md) — enable Google in Supabase; redirect URI in Google Console must be your Supabase `/auth/v1/callback` URL.
 
 Seed catalog from local JSON:
 

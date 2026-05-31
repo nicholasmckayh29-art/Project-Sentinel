@@ -29,7 +29,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const protectedPaths = ["/feed", "/watchlist", "/models", "/settings", "/onboarding"];
+  const protectedPaths = ["/feed", "/desk", "/watchlist", "/models", "/settings", "/onboarding"];
   const isProtected = protectedPaths.some((p) =>
     request.nextUrl.pathname.startsWith(p)
   );

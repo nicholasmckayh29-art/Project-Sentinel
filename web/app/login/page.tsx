@@ -1,24 +1,49 @@
 "use client";
 
+import { BrandLogo } from "@/components/BrandLogo";
+import { getAuthCallbackUrl } from "@/lib/auth-url";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 function friendlyAuthError(message: string): string {
   const lower = message.toLowerCase();
   if (lower.includes("rate limit") || lower.includes("email rate")) {
     return (
       "EMAIL RATE LIMIT — Supabase's built-in mailer allows ~4 emails/hour. " +
-      "Wait 60 minutes, or configure custom SMTP (Resend) in Supabase → Authentication → SMTP Settings."
+      "Configure custom SMTP (Resend) in Supabase → Authentication → SMTP Settings."
+    );
+  }
+  if (
+    lower.includes("403") ||
+    lower.includes("only send") ||
+    lower.includes("testing emails") ||
+    lower.includes("verify a domain")
+  ) {
+    return (
+      "EMAIL BLOCKED — Resend test mode only delivers to your Resend account email. " +
+      "Verify a domain at resend.com/domains and use that sender in Supabase SMTP to email any user."
+    );
+  }
+  if (lower.includes("redirect") || lower.includes("url configuration")) {
+    return (
+      "REDIRECT MISMATCH — Add this URL in Supabase → Authentication → URL Configuration → Redirect URLs: " +
+      getAuthCallbackUrl()
     );
   }
   return message;
 }
 
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("message");
+
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    urlError ? friendlyAuthError(decodeURIComponent(urlError)) : null
+  );
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
 
@@ -27,11 +52,10 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     const supabase = createClient();
+    const redirectTo = getAuthCallbackUrl(window.location.origin);
     const { error: authError } = await supabase.auth.signInWithOtp({
       email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { emailRedirectTo: redirectTo },
     });
     setLoading(false);
     if (authError) {
@@ -45,10 +69,12 @@ export default function LoginPage() {
     setOauthLoading(true);
     setError(null);
     const supabase = createClient();
+    const redirectTo = getAuthCallbackUrl(window.location.origin);
     const { error: authError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo,
+        queryParams: { prompt: "select_account" },
       },
     });
     setOauthLoading(false);
@@ -61,6 +87,7 @@ export default function LoginPage() {
     <main className="flex-1 flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md card-terminal p-8 space-y-6">
         <div>
+          <BrandLogo href="/" height={56} className="mb-4" />
           <p className="badge-classified mb-3">AUTH REQUIRED</p>
           <h1 className="font-mono text-xl text-accent terminal-glow">SECURE LOGIN</h1>
           <p className="text-sm text-muted mt-2">
@@ -117,5 +144,13 @@ export default function LoginPage() {
         </Link>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="flex-1 flex items-center justify-center"><p className="font-mono text-xs text-muted">Loading…</p></main>}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -1,24 +1,22 @@
 # Pricing Sentinel — Coding Session Handoff
 
-> **Date**: May 31, 2026  
+> **Last updated**: May 31, 2026  
 > **Repo**: `/Users/nich/Projects/pricing-sentinel`  
 > **GitHub**: [nicholasmckayh29-art/Project-Sentinel](https://github.com/nicholasmckayh29-art/Project-Sentinel)  
 > **Branch**: `main`  
-> **Latest commit**: `6d02399` — Market terminal, DESK, ingest pipeline  
+> **Latest commit**: `8144638` — Tagline + site credits  
+> **Prior commit**: `76d8764` — DESK bug fixes, watchlist scope wiring  
 > **Vercel**: Root directory = `web` (auto-deploy from `main`)
 
 ---
 
 ## Executive summary
 
-Pricing Sentinel is an **AI model decision layer** (True Cost, alerts, routing) with a **Bloomberg-style terminal UI** (Mr. Robot palette). The May 31 session shipped **TERMINAL** (`/feed`), **DESK** (`/desk`), multi-source news/equity ingest, and migrations `003`–`006`.
+Pricing Sentinel is an **AI model decision layer** (True Cost, alerts, routing) with a **Bloomberg-style terminal UI** (Mr. Robot palette). TERMINAL (`/feed`) and DESK (`/desk`) are live with multi-source ingest, migrations `003`–`006`, and watchlist-aware filtering.
 
-**Human operator completed today:**
-- Supabase migrations `003`–`006` applied
-- Manual SQL fix: `market_events.url_hash` **UNIQUE constraint** (see Known issues)
-- `pip install -r backend/requirements.txt` in `.venv`
-- `python backend/market_sync_worker.py` — **working** (~100 events, 6 equity quotes)
-- Push to `main` → Vercel redeploy triggered
+**Phase 1 polish bugs are fixed** in `76d8764` (pie chart, ModelPicker clear-all, provider/workload watchlist wiring). README product table is updated.
+
+**Next up**: commit local Google OAuth redirect fixes, add GitHub Action secrets, run backfill/routing sync if data is thin, then Phase 1.5 enrichment.
 
 **North star doc**: [`CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md`](CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md)
 
@@ -40,17 +38,33 @@ Pricing Sentinel is an **AI model decision layer** (True Cost, alerts, routing) 
 
 | Area | Status |
 |------|--------|
-| Auth (magic link + Google) | ✅ |
-| **TERMINAL** `/feed` — ticker, price tape, news wire, sentiment, macro bar | ✅ UI + data after market sync |
-| **DESK** `/desk` — ModelPicker, line/bar/table, research wire, community pulse, route panel | ✅ Partial (see bugs) |
+| Auth (magic link + Google) | ✅ Code on main; OAuth redirect hardening **uncommitted** (see below) |
+| **TERMINAL** `/feed` — ticker, price tape, news wire, sentiment, macro bar | ✅ Watchlist-scoped alerts + ticker |
+| **DESK** `/desk` — ModelPicker, charts, research wire, community pulse, route panel | ✅ Pie chart, clear-all, provider models in picker |
+| Watchlist — models, providers, workloads | ✅ All three affect TERMINAL/DESK (see semantics below) |
 | Model catalog `/models` → links to DESK | ✅ |
-| Watchlist models — DB CRUD | ✅ |
 | News ingest (HN, RSS, arXiv, OpenAlex, GitHub, etc.) | ✅ |
 | Equity quotes (yfinance dev / Finnhub prod) | ✅ |
 | Price backfill + sparklines | ✅ Scripts exist; run if charts empty |
-| Routing recommendations table + weekly sync | ✅ Code; needs `routing_sync_worker` run |
+| Routing recommendations + weekly sync | ✅ Code; run `routing_sync_worker` to populate route panel |
 | Stripe live / premium gates | ⚠️ Code exists; not fully wired in prod |
-| GitHub Actions secrets for market sync | ⚠️ Add `FINNHUB_API_KEY`, optional `FRED_API_KEY`, etc. |
+| GitHub Actions secrets for market sync | ⚠️ Add `FINNHUB_API_KEY`, optional `FRED_API_KEY` |
+
+---
+
+## Watchlist semantics (implemented)
+
+| Watchlist type | TERMINAL `/feed` | DESK `/desk` |
+|----------------|------------------|--------------|
+| **Models** | Ticker + alert filter | ModelPicker chips, charts, alerts |
+| **Providers** | All models for provider merged into ticker + alert filter | Provider models appear in ModelPicker |
+| **Workloads** | Alerts filtered by `workload_id` | Route panel filtered to watched workloads only |
+
+**Helpers**: [`web/lib/terminal-data.ts`](web/lib/terminal-data.ts) — `mergeModelIds`, `filterAlertsByScope`, `buildModelTicks`.
+
+**Partial gaps**:
+- DESK **alerts** filter by selected **models** only (not workload-scoped).
+- DESK **research wire** is still a global arXiv/release dump (Phase 1.5).
 
 ---
 
@@ -71,88 +85,78 @@ Next.js on Vercel (anon key + RLS)
 
 ---
 
-## Key files (start here tomorrow)
+## Key files (start here)
 
 | Path | Purpose |
 |------|---------|
 | [`web/components/terminal/TerminalLayout.tsx`](web/components/terminal/TerminalLayout.tsx) | TERMINAL orchestrator + Realtime |
-| [`web/components/terminal/DeskClient.tsx`](web/components/terminal/DeskClient.tsx) | DESK panel grid |
-| [`web/components/terminal/ModelPicker.tsx`](web/components/terminal/ModelPicker.tsx) | DESK model chips (needs clear-all) |
-| [`web/components/WatchlistManager.tsx`](web/components/WatchlistManager.tsx) | Watchlist UI (providers/workloads not wired to feed) |
-| [`web/components/terminal/charts/PieCostPanel.tsx`](web/components/terminal/charts/PieCostPanel.tsx) | Broken pie chart |
-| [`web/app/(dashboard)/feed/page.tsx`](web/app/(dashboard)/feed/page.tsx) | TERMINAL server data |
-| [`web/app/(dashboard)/desk/page.tsx`](web/app/(dashboard)/desk/page.tsx) | DESK server data |
+| [`web/components/terminal/DeskClient.tsx`](web/components/terminal/DeskClient.tsx) | DESK panel grid; passes snapshot pricing to pie |
+| [`web/components/terminal/ModelPicker.tsx`](web/components/terminal/ModelPicker.tsx) | DESK model chips + CLEAR ALL |
+| [`web/components/terminal/charts/PieCostPanel.tsx`](web/components/terminal/charts/PieCostPanel.tsx) | Input/output cost donut (dark-theme legend) |
+| [`web/app/(dashboard)/feed/page.tsx`](web/app/(dashboard)/feed/page.tsx) | TERMINAL server data + watchlist scope |
+| [`web/app/(dashboard)/desk/page.tsx`](web/app/(dashboard)/desk/page.tsx) | DESK server data + provider/workload scope |
 | [`web/lib/terminal-data.ts`](web/lib/terminal-data.ts) | Watchlist-scoped alerts/ticker helpers |
+| [`web/lib/auth-url.ts`](web/lib/auth-url.ts) | OAuth redirect origin helper (**uncommitted**) |
 | [`backend/engine/ingest_news.py`](backend/engine/ingest_news.py) | All news sources |
-| [`backend/engine/supabase_sync.py`](backend/engine/supabase_sync.py) | DB sync helpers |
 | [`backend/market_sync_worker.py`](backend/market_sync_worker.py) | News + quotes + macro + community |
-| [`supabase/migrations/003_market_quotes.sql`](supabase/migrations/003_market_quotes.sql) | Quotes + url_hash constraint |
 
-**Docs**: [`docs/LAUNCH.md`](docs/LAUNCH.md) · [`docs/future-projections.md`](docs/future-projections.md) · [`docs/future-quantum.md`](docs/future-quantum.md)
-
----
-
-## Known bugs (fix first tomorrow)
-
-### 1. DESK ModelPicker — no “clear all”
-
-**Symptom**: User must click each selected model chip to deselect; no one-click clear.
-
-**Where**: [`ModelPicker.tsx`](web/components/terminal/ModelPicker.tsx) — only per-chip toggle; when deselecting last chip, URL param `models` is removed but no explicit “Clear selection” control.
-
-**Fix**: Add a **CLEAR ALL** button that sets `selected` to `[]` and navigates to `/desk` without `?models=`. Respect free-tier UX (empty state → show watchlist CTA).
+**Docs**: [`docs/LAUNCH.md`](docs/LAUNCH.md) · [`docs/google-oauth-setup.md`](docs/google-oauth-setup.md) (**uncommitted**) · [`docs/future-projections.md`](docs/future-projections.md)
 
 ---
 
-### 2. Watchlist providers & workload presets do nothing for TERMINAL/DESK
+## Recently fixed (`76d8764`)
 
-**Symptom**: User selects providers/workloads on `/watchlist`; TERMINAL and DESK behave as if only **model** watchlist matters.
+### 1. DESK ModelPicker — CLEAR ALL ✅
 
-**Root cause**:
-- [`feed/page.tsx`](web/app/(dashboard)/feed/page.tsx) and [`desk/page.tsx`](web/app/(dashboard)/desk/page.tsx) only query `user_watchlist_models`.
-- [`WatchlistManager.tsx`](web/components/WatchlistManager.tsx) copy says “Alerts filter to your selections” but providers/workloads are stored in DB and **never read** by feed/desk queries.
-- `watchlist_count()` RLS counts all three types toward the 3-item free cap, but filtering logic ignores providers/workloads.
+[`ModelPicker.tsx`](web/components/terminal/ModelPicker.tsx): `clearAll()` removes `?models=` and navigates to `/desk`.
 
-**Fix options** (pick one product shape):
-- **A)** When provider watched → include all models for that provider in ticker/DESK picker and alert filter.
-- **B)** When workload watched → filter alerts by `workload_id`, show True Cost on DESK for that workload, drive RoutePanel from watched workloads only.
-- **C)** Update watchlist copy to “Models only affect TERMINAL/DESK today” until wired.
+### 2. Watchlist providers & workloads wired ✅
 
-**Files to touch**: `terminal-data.ts`, `feed/page.tsx`, `desk/page.tsx`, possibly `WatchlistManager` empty states.
+- **Providers** → all models for that provider merged via `mergeModelIds` on feed + desk.
+- **Workloads** → `filterAlertsByScope` on TERMINAL; route panel filtered on DESK.
 
----
+### 3. Pie chart ✅
 
-### 3. Pie chart — invisible labels + chart not rendering
+[`PieCostPanel.tsx`](web/components/terminal/charts/PieCostPanel.tsx): styled legend/tooltip, `min-h-[140px]`, summary stats. [`DeskClient.tsx`](web/components/terminal/DeskClient.tsx) uses latest snapshot row for primary model.
 
-**Symptom**: DESK pie/donut has dark labels on black background; chart appears broken.
+### 4. Release feed URL ✅
 
-**Where**: [`PieCostPanel.tsx`](web/components/terminal/charts/PieCostPanel.tsx)
+[`check_releases.py`](backend/engine/check_releases.py): switched to `pricepertoken.com/feed` with graceful fallback.
 
-**Likely causes**:
-1. **Data source**: Pie uses `models.pricing` from catalog (`DeskClient` passes `primary?.pricing?.input_per_1m`) — not latest `price_snapshots`. If catalog JSON empty/malformed → shows “NO PRICING DATA” or zero slices.
-2. **Recharts + dark theme**: No `Legend`/`Label` styling; default text may be `#000`. Need explicit `fill="#e0e0e0"` on labels/legend or custom `label` renderer with terminal colors.
-3. **ResponsiveContainer**: Known SSR/hydration issue in flex layouts — chart area can render at 0×0. Try fixed `height={200}` or `minHeight` on parent.
+### 5. README product table ✅
 
-**Fix**:
-- Prefer **latest snapshot** for pie (same as line chart): pass `input_per_1m` / `output_per_1m` from last row in `tableRows` for primary model.
-- Add `Legend` with `wrapperStyle={{ color: '#888' }}` or use center label with `$X in / $Y out` text.
-- Add `LabelList` with light fill or tooltip-only + summary stats below chart.
+90-day free history, TERMINAL + DESK rows added.
 
 ---
 
-### 4. Ingest warnings (non-blocking)
+## Uncommitted work (commit first)
 
-| Warning | Notes |
-|---------|--------|
-| pricetoken release feed 404 | [`check_releases.py`](backend/engine/check_releases.py) — feed URL dead; other sources OK |
-| Bluesky 403 | Optional; consider removing or retry with auth |
-| `FRED_API_KEY` unset | Macro bar empty until key added |
+Local changes not yet on `main`:
+
+| File | Change |
+|------|--------|
+| [`docs/google-oauth-setup.md`](docs/google-oauth-setup.md) | New — Google Cloud + Supabase + Vercel redirect checklist |
+| [`web/lib/auth-url.ts`](web/lib/auth-url.ts) | New — `getRedirectOrigin()` for prod/preview |
+| [`web/app/auth/callback/route.ts`](web/app/auth/callback/route.ts) | OAuth error handling + redirect origin |
+| [`web/app/login/page.tsx`](web/app/login/page.tsx) | Google sign-in redirect fixes |
+| [`web/lib/supabase/middleware.ts`](web/lib/supabase/middleware.ts) | Minor session tweak |
+| [`docs/auth-email-resend.md`](docs/auth-email-resend.md) | Resend SMTP notes |
+| [`docs/deployment.md`](docs/deployment.md) | Trimmed; OAuth details moved to google-oauth-setup |
+
+**Suggested commit message**: `Fix Google OAuth redirects and add setup guide`
 
 ---
 
-### 5. Migration `url_hash` (fixed in prod manually)
+## Known gaps (non-blocking)
 
-Repo migration [`003_market_quotes.sql`](supabase/migrations/003_market_quotes.sql) now uses `UNIQUE (url_hash)` constraint (PostgREST-compatible). If any env still has partial index only, run:
+| Item | Notes |
+|------|--------|
+| Bluesky 403 | Optional ingest source in `ingest_news.py`; safe to ignore or remove |
+| `FRED_API_KEY` unset | Macro bar empty until key added to env + GitHub secrets |
+| `market_events.url_hash` | Fixed in prod manually; migration `003` has correct `UNIQUE` constraint |
+| DESK research wire | Global feed — not yet tagged to watched model keywords |
+
+If any env still has partial index only on `url_hash`:
 
 ```sql
 DROP INDEX IF EXISTS idx_market_events_url_hash;
@@ -164,13 +168,12 @@ ALTER TABLE market_events ADD CONSTRAINT market_events_url_hash_key UNIQUE (url_
 
 ## Remaining work — full vision
 
-### Phase 1 polish (short)
+### Immediate (this session)
 
-- [ ] Fix bugs above (clear-all, watchlist wiring, pie chart)
+- [ ] Commit Google OAuth redirect fixes + `docs/google-oauth-setup.md`
 - [ ] Run `python backend/engine/backfill_supabase.py --with-alerts` if DESK charts empty
 - [ ] Run `python backend/routing_sync_worker.py` once to populate DESK route panel
 - [ ] Add GitHub secrets for `news-sync.yml` (`FINNHUB_API_KEY`, optional `FRED_API_KEY`)
-- [ ] Update [`README.md`](README.md) product table (90-day free history, TERMINAL/DESK)
 
 ### Phase 1.5 — enrichment backlog
 
@@ -180,11 +183,11 @@ ALTER TABLE market_events ADD CONSTRAINT market_events_url_hash_key UNIQUE (url_
 - [ ] Provider logos on `/models` catalog rows (Clearbit already in ModelPicker)
 - [ ] MarketAux ticker-tagged news (needs `MARKETAUX_API_KEY`)
 - [ ] WSB retail sentiment weight in SentimentPanel
+- [ ] DESK alerts scoped by watched workloads (TERMINAL already does)
 
 ### Phase 2 — intelligence
 
 - [ ] Richer alert cards in price tape (compact format + leader fields everywhere)
-- [ ] DESK route panel filtered by **watched workloads**
 - [ ] Cron: ensure `routing-sync.yml` runs after price sync with fresh `current_prices.json`
 - [ ] Wire alert `action` line from price hunter metadata consistently
 
@@ -231,9 +234,9 @@ python backend/worker.py
 
 | Route | Component | Data |
 |-------|-----------|------|
-| `/feed` | `TerminalLayout` | alerts, market_events, market_quotes, macro, community, watchlist models |
-| `/desk` | `DeskClient` | snapshots, models, alerts, research events, routing_recommendations |
-| `/watchlist` | `WatchlistManager` | user_watchlist_* |
+| `/feed` | `TerminalLayout` | alerts (watchlist-scoped), market_events, market_quotes, macro, community, effective model ticks |
+| `/desk` | `DeskClient` | snapshots, models, alerts, research events, routing_recommendations (workload-filtered) |
+| `/watchlist` | `WatchlistManager` | user_watchlist_models / providers / workloads |
 | `/models` | catalog + sparklines | price_snapshots |
 
 Nav: **TERMINAL** · **DESK** · **MODELS** · **WATCHLIST** · **SETTINGS**
@@ -249,24 +252,13 @@ cd web && npm run build              # must pass before deploy
 
 ---
 
-## Deleted / cleaned this session
+## Suggested next session order
 
-| Removed | Why |
-|---------|-----|
-| `web/components/IntelFeed.tsx` | Replaced by `TerminalLayout` |
-| `HANDOFF.md` | Obsolete Phase 1 CLI handoff |
-| `AGENT_HANDOFF.md` | Superseded by this file |
-| `data/market_events.json` | Local stub; ingest writes to Supabase |
-| `config/cron_schedules.yaml` | Pointed at non-existent `scripts/`; use `.github/workflows/` |
+1. **Commit OAuth fixes** — uncommitted auth-url + callback + google-oauth-setup doc  
+2. **Verify Google sign-in on prod** — follow [`docs/google-oauth-setup.md`](docs/google-oauth-setup.md)  
+3. **Backfill + routing sync** if DESK charts or route panel are empty  
+4. **GitHub secrets** — `FINNHUB_API_KEY`, `FRED_API_KEY`  
+5. **Phase 1.5** — research wire scoped to watchlist, provider logos on `/models`  
+6. **Stripe** when ready for launch  
 
----
-
-## Suggested tomorrow session order
-
-1. **Pie chart fix** (quick visual win on DESK)  
-2. **ModelPicker clear-all** (UX)  
-3. **Wire provider/workload watchlist** to feed filter + DESK route panel  
-4. **Backfill + routing sync** if data still thin  
-5. **Stripe / GitHub secrets** if time  
-
-Good luck — the terminal skeleton is live; tomorrow is wiring watchlist semantics and DESK polish.
+Terminal + DESK are feature-complete for Phase 1; focus shifts to auth hardening in prod, data freshness, and enrichment.

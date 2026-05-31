@@ -1,6 +1,6 @@
 import { DeskClient } from "@/components/terminal/DeskClient";
 import { groupSnapshotsByModel } from "@/lib/price-trends";
-import { mergeModelIds } from "@/lib/terminal-data";
+import { mergeModelIds, parseDeskModelSelection } from "@/lib/terminal-data";
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 
@@ -45,14 +45,16 @@ export default async function DeskPage({
     providerModelRows.map((m) => m.id)
   );
 
-  const selectedFromUrl = params.models?.split(",").filter(Boolean) ?? [];
-  const selectedIds =
-    selectedFromUrl.length > 0
-      ? selectedFromUrl.slice(0, 3)
-      : effectiveModelIds.slice(0, 3);
+  const { selectedIds, explicitSelection } = parseDeskModelSelection(
+    params.models,
+    effectiveModelIds
+  );
 
-  const modelIdsToFetch =
-    selectedIds.length > 0 ? selectedIds : effectiveModelIds;
+  const modelIdsToFetch = explicitSelection
+    ? selectedIds
+    : selectedIds.length > 0
+      ? selectedIds
+      : effectiveModelIds;
 
   const [
     watchlistResult,

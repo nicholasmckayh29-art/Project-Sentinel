@@ -12,9 +12,9 @@ Supabase's built-in mailer allows ~**4 emails/hour**. This guide switches magic-
 **A) Quick test (no domain)** — only sends to **your** Resend signup email:
 
 - Use sender: `onboarding@resend.dev`
-- Good for verifying SMTP works once
+- **Other users will NOT receive magic links** until you complete option B
 
-**B) Production (recommended)** — send to any user:
+**B) Production (required for other users)** — send to any user:
 
 1. Resend → **Domains** → Add domain
 2. Add the DNS records Resend shows (TXT, MX, etc.)
@@ -48,6 +48,9 @@ Still in **Authentication**:
 3. **URL Configuration** — confirm redirect URLs:
    - `http://localhost:3000/auth/callback` (local)
    - `https://YOUR-APP.vercel.app/auth/callback` (production)
+   - `https://*.vercel.app/auth/callback` (Vercel previews)
+
+Set **Site URL** to your production app URL. Set **NEXT_PUBLIC_APP_URL** in Vercel to match.
 
 ## Step 4 — Test
 
@@ -71,7 +74,8 @@ Add to **GitHub Actions secrets** (for premium alert digests):
 |-------|-----|
 | Still rate limited | Built-in mailer may still be active — double-check Custom SMTP is ON and saved |
 | SMTP authentication failed | Username must be exactly `resend`; password is API key, not account password |
-| Resend 403 | Domain not verified, or using `onboarding@resend.dev` to send to someone other than your Resend account email |
+| Resend 403 / email only works for you | Using `onboarding@resend.dev` — **verify a domain** in Resend and update Supabase sender |
+| Google sign-in fails | See [google-oauth-setup.md](./google-oauth-setup.md) |
 | Link goes to wrong site | Fix Site URL + Redirect URLs in Supabase URL Configuration |
 
 ## Alternative: Google sign-in (no email)

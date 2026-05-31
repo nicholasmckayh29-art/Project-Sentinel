@@ -1,3 +1,4 @@
+import { BrandLogo } from "@/components/BrandLogo";
 import Link from "next/link";
 
 const NAV = [
@@ -11,9 +12,7 @@ const NAV = [
 export function DashboardNav() {
   return (
     <nav className="border-b border-border bg-surface px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
-      <Link href="/feed" className="font-mono text-accent terminal-glow text-sm tracking-widest">
-        PRICING_SENTINEL
-      </Link>
+      <BrandLogo href="/feed" height={36} />
       <div className="flex gap-4 flex-wrap">
         {NAV.map((item) => (
           <Link

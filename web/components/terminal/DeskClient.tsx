@@ -62,7 +62,17 @@ export function DeskClient({
     <div className="space-y-6">
       <ModelPicker models={watchlistModels} selected={selectedIds} />
 
-      {!hasSnapshots && (
+      {selectedIds.length === 0 && watchlistModels.length > 0 && (
+        <p className="font-mono text-xs text-muted border border-border p-3">
+          &gt; NO MODELS SELECTED. PICK UP TO 3 CHIPS ABOVE OR{" "}
+          <a href="/watchlist" className="text-accent hover:underline">
+            EDIT WATCHLIST
+          </a>
+          .
+        </p>
+      )}
+
+      {!hasSnapshots && selectedIds.length > 0 && (
         <p className="font-mono text-xs text-muted border border-border p-3">
           &gt; NO PRICE HISTORY YET. RUN BACKFILL FOR CHART DATA.
         </p>
