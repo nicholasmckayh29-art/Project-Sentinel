@@ -17,6 +17,44 @@
 3. Enable Email auth (Authentication → Providers)
 4. Copy **Project URL** (format: `https://YOUR-REF.supabase.co`) — **not** the dashboard browser URL
 
+### Fix: "Email rate limit exceeded"
+
+Supabase's **built-in email** allows only ~**4 magic links per hour** on the free tier. Testing login repeatedly triggers this quickly.
+
+**Permanent fix — custom SMTP via Resend** (recommended):
+
+1. Create a free account at [resend.com](https://resend.com)
+2. Verify a domain (or use Resend's test address for dev only)
+3. Supabase → **Project Settings → Authentication → SMTP Settings**
+4. Enable custom SMTP:
+
+| Field | Value |
+|-------|--------|
+| Host | `smtp.resend.com` |
+| Port | `465` (SSL) or `587` (TLS) |
+| Username | `resend` |
+| Password | your Resend API key (`re_...`) |
+| Sender email | verified address (e.g. `onboarding@yourdomain.com`) |
+| Sender name | `Pricing Sentinel` |
+
+5. Save — magic links now use Resend (100 emails/day free)
+
+**Immediate workarounds:**
+
+- Wait **~60 minutes** for the limit to reset
+- Use **Sign in with Google** (enable below)
+- Avoid clicking "Send magic link" multiple times during testing
+
+### Optional: Google sign-in
+
+1. Supabase → **Authentication → Providers → Google** → Enable
+2. Create OAuth credentials in [Google Cloud Console](https://console.google.com/) (Web application)
+3. Authorized redirect URI: `https://eamkkmlpphsimvznjjcf.supabase.co/auth/v1/callback`
+4. Paste Client ID + Secret into Supabase
+5. Add your Vercel URL to Google **Authorized JavaScript origins**
+
+The login page includes a Google button once the provider is enabled.
+
 Seed catalog from local JSON:
 
 ```bash
