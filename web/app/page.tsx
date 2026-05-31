@@ -32,8 +32,7 @@ export default function LandingPage() {
               AI MODEL INTELLIGENCE
             </h1>
             <p className="mt-4 text-muted text-lg leading-relaxed">
-              Not another pricing dashboard. Insider signals on which model to use,
-              when to switch, and why — before the market catches on.
+              AI Model Arbitrage: Know when to switch before the market does.
             </p>
           </div>
 
