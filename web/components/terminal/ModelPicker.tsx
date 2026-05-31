@@ -40,6 +40,13 @@ export function ModelPicker({
     [selected, maxSelect, router, searchParams]
   );
 
+  const clearAll = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("models");
+    const q = params.toString();
+    router.push(q ? `/desk?${q}` : "/desk", { scroll: false });
+  }, [router, searchParams]);
+
   if (models.length === 0) {
     return (
       <p className="font-mono text-xs text-muted">
@@ -52,7 +59,7 @@ export function ModelPicker({
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 items-center">
       {models.map((m) => {
         const active = selected.includes(m.model_id);
         return (
@@ -71,6 +78,15 @@ export function ModelPicker({
           </button>
         );
       })}
+      {selected.length > 0 && (
+        <button
+          type="button"
+          onClick={clearAll}
+          className="font-mono text-[10px] px-2 py-1 border border-border text-muted hover:border-accent/50 hover:text-accent"
+        >
+          CLEAR ALL
+        </button>
+      )}
       <span className="font-mono text-[10px] text-muted self-center">
         {selected.length}/{maxSelect} selected
       </span>

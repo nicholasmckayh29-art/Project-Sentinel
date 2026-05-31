@@ -36,6 +36,26 @@ export function filterAlertsByWatchlist<T extends { model_id: string }>(
   return filtered.length > 0 ? filtered : alerts;
 }
 
+export function filterAlertsByScope<T extends { model_id: string; workload_id?: string | null }>(
+  alerts: T[],
+  modelIds: string[],
+  workloadIds: string[]
+): T[] {
+  if (modelIds.length === 0 && workloadIds.length === 0) return alerts;
+  const modelSet = new Set(modelIds);
+  const workloadSet = new Set(workloadIds);
+  const filtered = alerts.filter(
+    (a) =>
+      (modelIds.length > 0 && modelSet.has(a.model_id)) ||
+      (workloadIds.length > 0 && a.workload_id != null && workloadSet.has(a.workload_id))
+  );
+  return filtered.length > 0 ? filtered : alerts;
+}
+
+export function mergeModelIds(explicit: string[], fromProviders: string[]): string[] {
+  return [...new Set([...explicit, ...fromProviders])];
+}
+
 export async function getPremiumStatus(
   supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>
 ): Promise<boolean> {

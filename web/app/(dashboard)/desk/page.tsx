@@ -1,5 +1,6 @@
 import { DeskClient } from "@/components/terminal/DeskClient";
 import { groupSnapshotsByModel } from "@/lib/price-trends";
+import { mergeModelIds } from "@/lib/terminal-data";
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 
@@ -18,22 +19,40 @@ export default async function DeskPage({
   since.setDate(since.getDate() - HISTORY_DAYS);
 
   let watchlistModelIds: string[] = [];
+  let watchlistProviderIds: string[] = [];
+  let watchlistWorkloadIds: string[] = [];
   if (user) {
-    const { data: wl } = await supabase
-      .from("user_watchlist_models")
-      .select("model_id")
-      .eq("user_id", user.id);
+    const [{ data: wl }, { data: wp }, { data: ww }] = await Promise.all([
+      supabase.from("user_watchlist_models").select("model_id").eq("user_id", user.id),
+      supabase.from("user_watchlist_providers").select("provider_id").eq("user_id", user.id),
+      supabase.from("user_watchlist_workloads").select("workload_id").eq("user_id", user.id),
+    ]);
     watchlistModelIds = (wl ?? []).map((r) => r.model_id);
+    watchlistProviderIds = (wp ?? []).map((r) => r.provider_id);
+    watchlistWorkloadIds = (ww ?? []).map((r) => r.workload_id);
   }
+
+  let providerModelRows: { id: string; display_name: string; provider_id: string }[] = [];
+  if (watchlistProviderIds.length > 0) {
+    const { data } = await supabase
+      .from("models")
+      .select("id, display_name, provider_id")
+      .in("provider_id", watchlistProviderIds);
+    providerModelRows = data ?? [];
+  }
+  const effectiveModelIds = mergeModelIds(
+    watchlistModelIds,
+    providerModelRows.map((m) => m.id)
+  );
 
   const selectedFromUrl = params.models?.split(",").filter(Boolean) ?? [];
   const selectedIds =
     selectedFromUrl.length > 0
       ? selectedFromUrl.slice(0, 3)
-      : watchlistModelIds.slice(0, 3);
+      : effectiveModelIds.slice(0, 3);
 
   const modelIdsToFetch =
-    selectedIds.length > 0 ? selectedIds : watchlistModelIds;
+    selectedIds.length > 0 ? selectedIds : effectiveModelIds;
 
   const [
     watchlistResult,
@@ -87,13 +106,19 @@ export default async function DeskPage({
 
   const watchlistRows = watchlistResult.data;
 
-  const watchlistModels = (watchlistRows ?? [])
-    .map((row) => {
+  const watchlistModels = (() => {
+    const byId = new Map<string, { model_id: string; display_name: string; provider_id: string }>();
+    for (const row of watchlistRows ?? []) {
       const m = row.models as { id: string; display_name: string; provider_id: string } | null;
-      if (!m) return null;
-      return { model_id: m.id, display_name: m.display_name, provider_id: m.provider_id };
-    })
-    .filter((m): m is { model_id: string; display_name: string; provider_id: string } => m !== null);
+      if (m) byId.set(m.id, { model_id: m.id, display_name: m.display_name, provider_id: m.provider_id });
+    }
+    for (const m of providerModelRows) {
+      if (!byId.has(m.id)) {
+        byId.set(m.id, { model_id: m.id, display_name: m.display_name, provider_id: m.provider_id });
+      }
+    }
+    return [...byId.values()];
+  })();
 
   const modelsById: Record<string, { id: string; display_name: string; pricing: { input_per_1m?: number; output_per_1m?: number } }> = {};
   for (const m of models ?? []) {
@@ -138,6 +163,9 @@ export default async function DeskPage({
   const routes = Array.from(workloadRoutes.values())
     .map((group) => group![0])
     .filter(Boolean)
+    .filter((r) =>
+      watchlistWorkloadIds.length === 0 ? true : watchlistWorkloadIds.includes(r.workload_id)
+    )
     .slice(0, 3);
 
   return (

@@ -47,7 +47,7 @@ export function DeskClient({
   modelsById: Record<string, ModelMeta>;
   lineData: { date: string; output: number }[];
   barData: { name: string; output: number }[];
-  tableRows: (SnapshotRow & { delta_pct?: number | null })[];
+  tableRows: (SnapshotRow & { model_id: string; delta_pct?: number | null })[];
   latestAlert: Alert | null;
   researchEvents: MarketEvent[];
   communitySignals: CommunitySignal[];
@@ -56,6 +56,7 @@ export function DeskClient({
 }) {
   const primaryId = selectedIds[0];
   const primary = primaryId ? modelsById[primaryId] : null;
+  const latestPrimary = primaryId ? tableRows.find((r) => r.model_id === primaryId) : undefined;
 
   return (
     <div className="space-y-6">
@@ -73,8 +74,8 @@ export function DeskClient({
           title={primary ? `${primary.display_name} · OUTPUT $/1M · 90D` : "OUTPUT $/1M · 90D"}
         />
         <PieCostPanel
-          inputPer1m={primary?.pricing?.input_per_1m ?? 0}
-          outputPer1m={primary?.pricing?.output_per_1m ?? 0}
+          inputPer1m={latestPrimary?.input_per_1m ?? primary?.pricing?.input_per_1m ?? 0}
+          outputPer1m={latestPrimary?.output_per_1m ?? primary?.pricing?.output_per_1m ?? 0}
           title={primary ? `${primary.display_name} · COST MIX` : "COST MIX"}
         />
         <BarComparePanel data={barData} title="CROSS-MODEL COMPARE" />

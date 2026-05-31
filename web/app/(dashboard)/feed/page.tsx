@@ -1,5 +1,5 @@
 import { TerminalLayout } from "@/components/terminal/TerminalLayout";
-import { buildModelTicks, filterAlertsByWatchlist, getPremiumStatus } from "@/lib/terminal-data";
+import { buildModelTicks, filterAlertsByScope, getPremiumStatus, mergeModelIds } from "@/lib/terminal-data";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function FeedPage() {
@@ -7,19 +7,36 @@ export default async function FeedPage() {
   const { data: { user } } = await supabase.auth.getUser();
   const isPremium = await getPremiumStatus(supabase);
 
-  let watchlistModelIds: string[] | null = null;
+  let watchlistModelIds: string[] = [];
+  let watchlistProviderIds: string[] = [];
+  let watchlistWorkloadIds: string[] = [];
   if (user) {
-    const { data: wl } = await supabase
-      .from("user_watchlist_models")
-      .select("model_id")
-      .eq("user_id", user.id);
+    const [{ data: wl }, { data: wp }, { data: ww }] = await Promise.all([
+      supabase.from("user_watchlist_models").select("model_id").eq("user_id", user.id),
+      supabase.from("user_watchlist_providers").select("provider_id").eq("user_id", user.id),
+      supabase.from("user_watchlist_workloads").select("workload_id").eq("user_id", user.id),
+    ]);
     watchlistModelIds = (wl ?? []).map((r) => r.model_id);
+    watchlistProviderIds = (wp ?? []).map((r) => r.provider_id);
+    watchlistWorkloadIds = (ww ?? []).map((r) => r.workload_id);
   }
+
+  let providerModelIds: string[] = [];
+  if (watchlistProviderIds.length > 0) {
+    const { data: providerModels } = await supabase
+      .from("models")
+      .select("id")
+      .in("provider_id", watchlistProviderIds);
+    providerModelIds = (providerModels ?? []).map((m) => m.id);
+  }
+  const effectiveModelIds = mergeModelIds(watchlistModelIds, providerModelIds);
+  const hasWatchlist =
+    effectiveModelIds.length > 0 || watchlistWorkloadIds.length > 0;
 
   const since = new Date();
   since.setDate(since.getDate() - 90);
 
-  const idsForTicks = watchlistModelIds && watchlistModelIds.length > 0 ? watchlistModelIds : null;
+  const idsForTicks = effectiveModelIds.length > 0 ? effectiveModelIds : null;
 
   const [
     { data: alertsRaw },
@@ -48,7 +65,9 @@ export default async function FeedPage() {
       : Promise.resolve({ data: [] as { model_id: string; fetched_at: string; output_per_1m: number }[] }),
   ]);
 
-  const alerts = filterAlertsByWatchlist(alertsRaw ?? [], watchlistModelIds);
+  const alerts = hasWatchlist
+    ? filterAlertsByScope(alertsRaw ?? [], effectiveModelIds, watchlistWorkloadIds)
+    : (alertsRaw ?? []);
   const modelTicks =
     idsForTicks && models
       ? buildModelTicks(idsForTicks, models, snapshots ?? [])

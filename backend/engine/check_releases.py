@@ -5,14 +5,9 @@ from __future__ import annotations
 import json
 import logging
 import sys
-from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 from urllib.error import URLError
 from urllib.request import Request, urlopen
-
-ROOT = Path(__file__).resolve().parent.parent.parent
-EVENTS_PATH = ROOT / "data" / "market_events.json"
 
 RELEASE_FEED_URL = "https://pricepertoken.com/feed"
 
@@ -55,17 +50,7 @@ def classify_release(item: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     feed_items = fetch_release_feed()
     events = [classify_release(item) for item in feed_items[:20]]
-
-    payload = {
-        "updated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "events": events,
-    }
-    EVENTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with EVENTS_PATH.open("w") as handle:
-        json.dump(payload, handle, indent=2)
-        handle.write("\n")
-
-    print(json.dumps({"status": "ok", "event_count": len(events)}))
+    print(json.dumps({"status": "ok", "event_count": len(events), "events": events[:3]}))
     return 0
 
 

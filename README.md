@@ -45,7 +45,8 @@ See [docs/deployment.md](docs/deployment.md) — Supabase + Vercel + Stripe + Gi
 | Model catalog | ✓ | ✓ |
 | Watchlist | 3 items | Unlimited |
 | Price alerts | 24h delay | Realtime |
-| Price history | 7 days | Full |
+| Price history | 90 days | Full |
+| TERMINAL + DESK | ✓ | ✓ |
 | Email alerts | — | ✓ |
 | AI news feed | Teaser | Full |
 
@@ -57,5 +58,6 @@ See [docs/deployment.md](docs/deployment.md) — Supabase + Vercel + Stripe + Gi
 
 ## Handoff docs
 
-- [HANDOFF.md](HANDOFF.md) — Phase 1 CLI history
+- [CODING_SESSION_HANDOFF.md](CODING_SESSION_HANDOFF.md) — **start here** for next coding session
 - [CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md](CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md) — product vision
+- [docs/LAUNCH.md](docs/LAUNCH.md) — deploy, Stripe, cron secrets
