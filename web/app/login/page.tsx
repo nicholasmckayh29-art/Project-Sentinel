@@ -1,6 +1,5 @@
 "use client";
 
-import { BrandLogo } from "@/components/BrandLogo";
 import { getAuthCallbackUrl } from "@/lib/auth-url";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
@@ -87,7 +86,6 @@ function LoginForm() {
     <main className="flex-1 flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md card-terminal p-8 space-y-6">
         <div>
-          <BrandLogo href="/" height={56} className="mb-4" />
           <p className="badge-classified mb-3">AUTH REQUIRED</p>
           <h1 className="font-mono text-xl text-accent terminal-glow">SECURE LOGIN</h1>
           <p className="text-sm text-muted mt-2">
