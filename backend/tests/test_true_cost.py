@@ -5,11 +5,11 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-from scripts.calculate_true_cost import true_cost, value_score, weighted_benchmark_score
-from scripts.validate_alerts import should_alert
+from backend.engine.calculate_true_cost import true_cost, value_score, weighted_benchmark_score
+from backend.engine.validate_alerts import should_alert
 
 
 CLAUDE_SONNET = {

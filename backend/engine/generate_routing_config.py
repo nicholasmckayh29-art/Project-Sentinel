@@ -9,11 +9,12 @@ from typing import Any
 
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.calculate_true_cost import meets_quality_requirements, true_cost, value_score  # noqa: E402
+from backend.engine.calculate_true_cost import meets_quality_requirements, true_cost, value_score  # noqa: E402
+from backend.engine.fetch_prices import apply_capability_overrides  # noqa: E402
 
 DATA_DIR = ROOT / "data"
 OUTPUT_PATH = ROOT / "routing_config.yaml"
@@ -101,16 +102,49 @@ def generate_routing_config(models: list[dict[str, Any]], workloads: list[dict[s
     }
 
 
-def main() -> int:
-    prices = _load_json(DATA_DIR / "current_prices.json")
-    workloads_payload = _load_json(DATA_DIR / "workloads.json")
-    models = prices.get("models", [])
-    workloads = workloads_payload.get("workloads", [])
-
-    config = generate_routing_config(models, workloads)
-    with OUTPUT_PATH.open("w") as handle:
+def write_routing_config(config: dict[str, Any], output_path: Path | None = None) -> Path:
+    path = output_path or OUTPUT_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as handle:
         yaml.safe_dump(config, handle, sort_keys=False)
+    return path
 
+
+def load_routing_config(output_path: Path | None = None) -> dict[str, Any] | None:
+    path = output_path or OUTPUT_PATH
+    if not path.exists():
+        return None
+    with path.open() as handle:
+        return yaml.safe_load(handle)
+
+
+def build_routing_config(
+    prices_path: Path = DATA_DIR / "current_prices.json",
+    workloads_path: Path = DATA_DIR / "workloads.json",
+    output_path: Path | None = None,
+) -> dict[str, Any]:
+    """Generate routing config from current prices and write to disk."""
+    path = output_path or OUTPUT_PATH
+    prices = _load_json(prices_path)
+    workloads_payload = _load_json(workloads_path)
+    models = apply_capability_overrides(prices.get("models", []))
+    workloads = workloads_payload.get("workloads", [])
+    config = generate_routing_config(models, workloads)
+    write_routing_config(config, path)
+    return config
+
+
+def get_routing_config(output_path: Path | None = None) -> dict[str, Any]:
+    """Return routing config from disk, generating it if missing."""
+    path = output_path or OUTPUT_PATH
+    config = load_routing_config(path)
+    if config is not None:
+        return config
+    return build_routing_config(output_path=path)
+
+
+def main() -> int:
+    config = build_routing_config()
     print(json.dumps({"status": "ok", "route_count": len(config["routes"])}))
     return 0
 

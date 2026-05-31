@@ -11,7 +11,7 @@ from typing import Any
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 EVENTS_PATH = ROOT / "data" / "market_events.json"
 
 RELEASE_FEED_URL = "https://pricepertoken.com/feed"

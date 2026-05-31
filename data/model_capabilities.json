@@ -1,49 +1,578 @@
 {
   "models": [
     {
-      "model_id": "claude-sonnet-4-6",
-      "benchmarks": {"mmlu": 0.88, "human_eval": 0.82, "gsm8k": 0.90, "mbpp": 0.85},
-      "metadata": {"efficiency_ratio": 1.0, "successor_rumored": false}
-    },
-    {
       "model_id": "claude-haiku-4-5-20251001",
-      "benchmarks": {"mmlu": 0.75, "human_eval": 0.70, "gsm8k": 0.78, "mbpp": 0.68},
-      "metadata": {"efficiency_ratio": 1.05}
+      "benchmarks": {
+        "mmlu": 0.75,
+        "human_eval": 0.7,
+        "gsm8k": 0.78,
+        "mbpp": 0.68,
+        "bbh": 0.72,
+        "truthful_qa": 0.71
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
     },
     {
-      "model_id": "gpt-4o-mini",
-      "benchmarks": {"mmlu": 0.82, "human_eval": 0.75, "gsm8k": 0.87, "mbpp": 0.72},
-      "metadata": {"efficiency_ratio": 1.1}
+      "model_id": "claude-opus-4-6",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
     },
     {
-      "model_id": "gpt-5-nano",
-      "benchmarks": {"mmlu": 0.80, "human_eval": 0.73, "gsm8k": 0.85, "mbpp": 0.70},
-      "metadata": {"efficiency_ratio": 1.0}
-    },
-    {
-      "model_id": "gemini-2.5-flash-lite",
-      "benchmarks": {"mmlu": 0.78, "human_eval": 0.68, "gsm8k": 0.82, "mbpp": 0.65},
-      "metadata": {"efficiency_ratio": 1.08}
+      "model_id": "claude-sonnet-4-6",
+      "benchmarks": {
+        "mmlu": 0.88,
+        "human_eval": 0.82,
+        "gsm8k": 0.9,
+        "mbpp": 0.85,
+        "bbh": 0.83,
+        "truthful_qa": 0.81
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
     },
     {
       "model_id": "deepseek-chat",
-      "benchmarks": {"mmlu": 0.84, "human_eval": 0.80, "gsm8k": 0.88, "mbpp": 0.78},
-      "metadata": {"efficiency_ratio": 1.0}
+      "benchmarks": {
+        "mmlu": 0.84,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.79,
+        "truthful_qa": 0.77
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
     },
     {
-      "model_id": "gpt-5.4",
-      "benchmarks": {"mmlu": 0.92, "human_eval": 0.88, "gsm8k": 0.95, "mbpp": 0.90},
-      "metadata": {"efficiency_ratio": 0.95}
+      "model_id": "deepseek-reasoner",
+      "benchmarks": {
+        "mmlu": 0.88,
+        "human_eval": 0.78,
+        "gsm8k": 0.94,
+        "mbpp": 0.76,
+        "bbh": 0.82,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 0.98
+      }
     },
     {
       "model_id": "gemini-2.5-flash",
-      "benchmarks": {"mmlu": 0.85, "human_eval": 0.78, "gsm8k": 0.88, "mbpp": 0.74},
-      "metadata": {"efficiency_ratio": 1.0}
+      "benchmarks": {
+        "mmlu": 0.85,
+        "human_eval": 0.78,
+        "gsm8k": 0.88,
+        "mbpp": 0.74,
+        "bbh": 0.79,
+        "truthful_qa": 0.77
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gemini-2.5-flash-lite",
+      "benchmarks": {
+        "mmlu": 0.78,
+        "human_eval": 0.68,
+        "gsm8k": 0.82,
+        "mbpp": 0.65,
+        "bbh": 0.72,
+        "truthful_qa": 0.71
+      },
+      "metadata": {
+        "efficiency_ratio": 1.08
+      }
+    },
+    {
+      "model_id": "gemini-2.5-pro",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gemini-3-flash-preview",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gemini-3.1-flash-lite-preview",
+      "benchmarks": {
+        "mmlu": 0.74,
+        "human_eval": 0.68,
+        "gsm8k": 0.78,
+        "mbpp": 0.65,
+        "bbh": 0.7,
+        "truthful_qa": 0.7
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "gemini-3.1-pro-preview",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "gpt-4.1",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-4.1-mini",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "gpt-4.1-nano",
+      "benchmarks": {
+        "mmlu": 0.74,
+        "human_eval": 0.68,
+        "gsm8k": 0.78,
+        "mbpp": 0.65,
+        "bbh": 0.7,
+        "truthful_qa": 0.7
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "gpt-4o",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "benchmarks": {
+        "mmlu": 0.82,
+        "human_eval": 0.75,
+        "gsm8k": 0.87,
+        "mbpp": 0.72,
+        "bbh": 0.78,
+        "truthful_qa": 0.76
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "gpt-5",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "gpt-5-mini",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "gpt-5-nano",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.73,
+        "gsm8k": 0.85,
+        "mbpp": 0.7,
+        "bbh": 0.76,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-5.1",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-5.2",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-5.3-chat-latest",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "gpt-5.3-codex",
+      "benchmarks": {
+        "mmlu": 0.84,
+        "human_eval": 0.86,
+        "gsm8k": 0.86,
+        "mbpp": 0.88,
+        "bbh": 0.78,
+        "truthful_qa": 0.76
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "gpt-5.4",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "gpt-5.4-mini",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "gpt-5.4-nano",
+      "benchmarks": {
+        "mmlu": 0.74,
+        "human_eval": 0.68,
+        "gsm8k": 0.78,
+        "mbpp": 0.65,
+        "bbh": 0.7,
+        "truthful_qa": 0.7
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "gpt-5.4-pro",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "grok-3",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "grok-3-mini",
+      "benchmarks": {
+        "mmlu": 0.74,
+        "human_eval": 0.68,
+        "gsm8k": 0.78,
+        "mbpp": 0.65,
+        "bbh": 0.7,
+        "truthful_qa": 0.7
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "grok-4",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
     },
     {
       "model_id": "grok-4.1-fast",
-      "benchmarks": {"mmlu": 0.80, "human_eval": 0.72, "gsm8k": 0.84, "mbpp": 0.68},
-      "metadata": {"efficiency_ratio": 1.05}
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.72,
+        "gsm8k": 0.84,
+        "mbpp": 0.68,
+        "bbh": 0.74,
+        "truthful_qa": 0.73
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "grok-4.20",
+      "benchmarks": {
+        "mmlu": 0.86,
+        "human_eval": 0.8,
+        "gsm8k": 0.88,
+        "mbpp": 0.78,
+        "bbh": 0.8,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "grok-code-fast-1",
+      "benchmarks": {
+        "mmlu": 0.84,
+        "human_eval": 0.86,
+        "gsm8k": 0.86,
+        "mbpp": 0.88,
+        "bbh": 0.78,
+        "truthful_qa": 0.76
+      },
+      "metadata": {
+        "efficiency_ratio": 1.0
+      }
+    },
+    {
+      "model_id": "jamba-1.5-mini",
+      "benchmarks": {
+        "mmlu": 0.74,
+        "human_eval": 0.68,
+        "gsm8k": 0.78,
+        "mbpp": 0.65,
+        "bbh": 0.7,
+        "truthful_qa": 0.7
+      },
+      "metadata": {
+        "efficiency_ratio": 1.1
+      }
+    },
+    {
+      "model_id": "jamba-large-1.7",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "o3",
+      "benchmarks": {
+        "mmlu": 0.88,
+        "human_eval": 0.78,
+        "gsm8k": 0.94,
+        "mbpp": 0.76,
+        "bbh": 0.82,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 0.98
+      }
+    },
+    {
+      "model_id": "o3-mini",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "o3-pro",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "o4-mini",
+      "benchmarks": {
+        "mmlu": 0.8,
+        "human_eval": 0.74,
+        "gsm8k": 0.84,
+        "mbpp": 0.72,
+        "bbh": 0.75,
+        "truthful_qa": 0.74
+      },
+      "metadata": {
+        "efficiency_ratio": 1.05
+      }
+    },
+    {
+      "model_id": "qwen3-max",
+      "benchmarks": {
+        "mmlu": 0.92,
+        "human_eval": 0.88,
+        "gsm8k": 0.95,
+        "mbpp": 0.9,
+        "bbh": 0.86,
+        "truthful_qa": 0.84
+      },
+      "metadata": {
+        "efficiency_ratio": 0.95
+      }
+    },
+    {
+      "model_id": "qwq-32b",
+      "benchmarks": {
+        "mmlu": 0.88,
+        "human_eval": 0.78,
+        "gsm8k": 0.94,
+        "mbpp": 0.76,
+        "bbh": 0.82,
+        "truthful_qa": 0.78
+      },
+      "metadata": {
+        "efficiency_ratio": 0.98
+      }
     }
   ]
 }

@@ -11,7 +11,7 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data"
 CAPABILITIES_PATH = DATA_DIR / "model_capabilities.json"
 OUTPUT_PATH = DATA_DIR / "current_prices.json"
@@ -90,6 +90,32 @@ def _load_capability_overrides() -> dict[str, dict[str, Any]]:
     with CAPABILITIES_PATH.open() as handle:
         payload = json.load(handle)
     return {entry["model_id"]: entry for entry in payload.get("models", [])}
+
+
+def apply_capability_overrides(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Merge local benchmark and efficiency overrides into price snapshot models."""
+    overrides = _load_capability_overrides()
+    if not overrides:
+        return models
+
+    merged: list[dict[str, Any]] = []
+    for model in models:
+        override = overrides.get(model["model_id"], {})
+        if not override:
+            merged.append(model)
+            continue
+
+        entry = {**model}
+        if override.get("benchmarks"):
+            entry["benchmarks"] = {**model.get("benchmarks", {}), **override["benchmarks"]}
+        if override.get("capabilities"):
+            entry["capabilities"] = {**model.get("capabilities", {}), **override["capabilities"]}
+        if override.get("metadata"):
+            entry["metadata"] = {**model.get("metadata", {}), **override["metadata"]}
+        if override.get("limits"):
+            entry["limits"] = {**model.get("limits", {}), **override["limits"]}
+        merged.append(entry)
+    return merged
 
 
 def _normalize_pricetoken(record: dict[str, Any], overrides: dict[str, dict[str, Any]]) -> dict[str, Any]:

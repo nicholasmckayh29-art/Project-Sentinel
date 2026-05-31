@@ -7,3 +7,10 @@ venv/
 *.egg-info/
 .DS_Store
 routing_config.yaml
+data/price_history.db
+web/node_modules
+web/.next
+web/.env.local
+.env
+.env.local
+supabase/.temp

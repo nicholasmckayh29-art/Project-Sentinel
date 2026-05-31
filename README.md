@@ -1,67 +1,61 @@
 # Pricing Sentinel
 
-Active intelligence platform that tells you **which AI model to use, when, and why** — not another pricing dashboard.
+Active intelligence platform — **which AI model to use, when, and why**. Mr. Robot terminal aesthetic. Web-first on Supabase + Vercel; iOS when revenue funds the Apple Developer account.
 
-## What It Does
+## Monorepo structure
 
-- **Routine 1 — Price Drop Hunter**: Detects meaningful price shifts using True Cost (not raw token prices)
-- **Routine 2 — Release Radar Analyst**: Monitors releases and rumors for wait/switch/hold signals
-- **Routine 3 — Stack Optimizer**: Generates opinionated routing configs with projected savings
+```
+pricing-sentinel/
+├── web/              Next.js app → deploy to Vercel
+├── backend/          Python engine + worker + tests
+├── supabase/         Postgres migrations + seed
+├── packages/theme/   Shared design tokens (web + future iOS)
+├── mobile/           iOS placeholder (Phase 2)
+└── docs/             Deployment + App Store checklists
+```
 
-## Quick Start
+## Quick start
+
+### Backend (local)
 
 ```bash
-cd pricing-sentinel
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Fetch live prices
-python scripts/fetch_prices.py
-
-# Run full Price Drop Hunter flow
-python scripts/run_price_hunter.py
-
-# Generate routing config
-python scripts/generate_routing_config.py
-
-# Run tests
-python -m pytest tests/ -v
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r backend/requirements.txt
+python -m pytest backend/tests/ -v
+python backend/engine/fetch_prices.py
+python backend/worker.py   # syncs to Supabase when env set
 ```
 
-## Data Sources
+### Web (local)
 
-| Priority | Source | Endpoint |
-|----------|--------|----------|
-| Primary | [PriceToken](https://pricetoken.ai) | `GET /api/v1/text` |
-| Fallback | [Price Per Token](https://pricepertoken.com) | `GET /api/v1/models` |
-| Benchmarks | `data/model_capabilities.json` | Curated overrides |
-
-## Project Structure
-
-```
-data/           Live snapshots, baselines, workloads
-scripts/        Core logic (fetch, calculate, alert, route)
-alerts/         Slack Block Kit + email digest formatters
-config/         Cron schedules and alert thresholds
-docs/           True Cost formula documentation
+```bash
+cd web && cp .env.local.example .env.local
+npm install && npm run dev
+# → http://localhost:3000
 ```
 
-## Cursor Automation Setup
+### Production deploy
 
-See `CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md` for full Routine specs. Wire each routine to run its script on the cron schedule in `config/cron_schedules.yaml`.
+See [docs/deployment.md](docs/deployment.md) — Supabase + Vercel + Stripe + GitHub Actions cron.
 
-**Secrets required** (Cursor Secrets): `SLACK_BOT_TOKEN`, `RESEND_API_KEY` (optional for email)
+## Product features
 
-## True Cost
+| Feature | Free | Premium ($19/mo) |
+|---------|------|------------------|
+| Model catalog | ✓ | ✓ |
+| Watchlist | 3 items | Unlimited |
+| Price alerts | 24h delay | Realtime |
+| Price history | 7 days | Full |
+| Email alerts | — | ✓ |
+| AI news feed | Teaser | Full |
 
-Raw token prices lie. True Cost adjusts for retries, caching, batch discounts, and token efficiency per workload. See [docs/true_cost_formula.md](docs/true_cost_formula.md).
+## Core engine
 
-## Phase 1 MVP
+- **True Cost** formula: [`docs/true_cost_formula.md`](docs/true_cost_formula.md)
+- **Price hunter**: [`backend/engine/run_price_hunter.py`](backend/engine/run_price_hunter.py)
+- **FastAPI** (dev only): `uvicorn backend.api.main:app --reload`
 
-- [x] Repository scaffold
-- [x] `fetch_prices.py` with live API
-- [x] True Cost calculator + tests
-- [x] Alert validation + Slack formatter
-- [ ] Cursor Routine 1 automation (Slack connector)
-- [ ] Baseline drift detection over time
+## Handoff docs
+
+- [HANDOFF.md](HANDOFF.md) — Phase 1 CLI history
+- [CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md](CONTEXT_AI_MODEL_INTELLIGENCE_PLATFORM.md) — product vision

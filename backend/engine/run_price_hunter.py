@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import sys
@@ -9,14 +10,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from alerts.slack_formatter import format_price_alert  # noqa: E402
-from scripts.calculate_true_cost import meets_quality_requirements, true_cost  # noqa: E402
-from scripts.fetch_prices import fetch_prices, write_prices  # noqa: E402
-from scripts.validate_alerts import find_leader, scan_for_alerts  # noqa: E402
+from backend.alerts.slack_client import deliver_slack_alerts  # noqa: E402
+from backend.alerts.slack_formatter import format_price_alert  # noqa: E402
+from backend.engine.calculate_true_cost import meets_quality_requirements, true_cost  # noqa: E402
+from backend.engine.fetch_prices import fetch_prices, write_prices  # noqa: E402
+from backend.engine.price_history import record_alert_events, record_snapshot  # noqa: E402
+from backend.engine.validate_alerts import find_leader, scan_for_alerts  # noqa: E402
 
 DATA_DIR = ROOT / "data"
 CONFIG_DIR = ROOT / "config"
@@ -138,13 +141,16 @@ def append_alert_history(alerts: list[dict]) -> None:
     _save_json(ALERTS_LOG_PATH, history)
 
 
-def main() -> int:
+def run_price_hunter(*, dry_run: bool = False) -> dict[str, Any]:
+    """Fetch prices, update baselines, scan for alerts, and return a summary."""
     rules = _load_json(THRESHOLDS_PATH, default={})
     workloads_payload = _load_json(WORKLOADS_PATH, default={"workloads": []})
     workloads = workloads_payload.get("workloads", [])
 
     snapshot = fetch_prices()
     write_prices(snapshot)
+    rows_recorded = record_snapshot(snapshot)
+    log.info("Recorded %d price snapshot row(s) to SQLite", rows_recorded)
 
     baselines = _load_json(BASELINES_PATH, default={"snapshots": [], "model_ids": []})
     baselines = update_baselines(snapshot, baselines)
@@ -158,19 +164,41 @@ def main() -> int:
     )
     alerts = enrich_alerts(alerts, snapshot.get("models", []), workloads)
 
+    slack_delivery: dict[str, Any] = {
+        "delivered": 0,
+        "skipped": 0,
+        "failed": 0,
+        "dry_run": dry_run,
+    }
+
     if alerts:
         append_alert_history(alerts)
+        record_alert_events(alerts, snapshot["fetched_at"])
         log.info("Generated %d alert(s)", len(alerts))
+        slack_delivery = deliver_slack_alerts(alerts, dry_run=dry_run)
     else:
         log.info("No alerts triggered")
 
-    output = {
+    return {
         "status": "ok",
         "fetched_at": snapshot["fetched_at"],
         "model_count": snapshot["model_count"],
         "alert_count": len(alerts),
+        "slack_delivery": slack_delivery,
         "alerts": alerts,
     }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run Price Drop Hunter (Routine 1)")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print Slack alert blocks without posting to Slack",
+    )
+    args = parser.parse_args(argv)
+
+    output = run_price_hunter(dry_run=args.dry_run)
     print(json.dumps(output, indent=2))
     return 0
 
