@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PriceSparkline, PeriodChangeBadge } from "@/components/PriceSparkline";
 import {
   computePeriodChange,
@@ -53,9 +54,10 @@ export default async function ModelsPage() {
               const pct = computePeriodChange(points);
 
               return (
-                <div
+                <Link
                   key={model.id}
-                  className="card-terminal p-3 flex justify-between items-center gap-4 flex-wrap"
+                  href={`/desk?models=${model.id}`}
+                  className="card-terminal p-3 flex justify-between items-center gap-4 flex-wrap hover:border-accent/50 transition-colors"
                 >
                   <div className="min-w-0">
                     <span className="font-mono text-sm block">{model.display_name}</span>
@@ -68,7 +70,7 @@ export default async function ModelsPage() {
                     <PriceSparkline values={series} />
                     <PeriodChangeBadge pct={pct} />
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

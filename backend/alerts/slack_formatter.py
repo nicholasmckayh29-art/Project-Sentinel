@@ -59,10 +59,21 @@ def format_digest_summary(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     lines = "\n".join(
         f"• *{item['model_name']}* — {item['recommendation']}" for item in items[:10]
     )
-    return [
+    blocks: list[dict[str, Any]] = [
         {
-            "type": "header",
-            "text": {"type": "plain_text", "text": "AI Model Intelligence Briefing"},
-        },
-        {"type": "section", "text": {"type": "mrkdwn", "text": lines or "_No major moves this week._"}},
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": f"*Weekly Digest*\n{lines or '_No items._'}"},
+        }
     ]
+    costs = [float(item.get("true_cost", 0)) for item in items[:10] if item.get("true_cost")]
+    if costs:
+        from backend.alerts.email_digest import quickchart_sparkline_url
+
+        blocks.append(
+            {
+                "type": "image",
+                "image_url": quickchart_sparkline_url(costs),
+                "alt_text": "True cost trend",
+            }
+        )
+    return blocks

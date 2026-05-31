@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 const NAV = [
-  { href: "/feed", label: "INTEL FEED" },
-  { href: "/watchlist", label: "WATCHLIST" },
+  { href: "/feed", label: "TERMINAL" },
+  { href: "/desk", label: "DESK" },
   { href: "/models", label: "MODELS" },
+  { href: "/watchlist", label: "WATCHLIST" },
   { href: "/settings", label: "SETTINGS" },
 ];
 

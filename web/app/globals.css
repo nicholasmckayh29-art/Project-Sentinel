@@ -84,3 +84,23 @@ body {
   border: 1px solid var(--accent-dim);
   padding: 0.15rem 0.5rem;
 }
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-marquee {
+  animation: ticker-scroll 40s linear infinite;
+  width: max-content;
+}
+
+.ticker-marquee-reverse {
+  animation: ticker-scroll 50s linear infinite reverse;
+  width: max-content;
+}
+
+.ticker-marquee:hover,
+.ticker-marquee-reverse:hover {
+  animation-play-state: paused;
+}

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import os
 from datetime import datetime, timezone
@@ -155,7 +156,10 @@ def sync_alerts(client, alerts: list[dict[str, Any]]) -> int:
                 "leader_model_id": alert.get("leader_model_id"),
                 "display_name": alert.get("display_name"),
                 "workload_name": alert.get("workload_name"),
-                "metadata": {"slack_blocks": alert.get("slack_blocks")},
+                "metadata": {
+                    "slack_blocks": alert.get("slack_blocks"),
+                    "action": alert.get("action"),
+                },
             }
         )
     client.table("alerts").insert(rows).execute()
@@ -190,3 +194,109 @@ def sync_hunter_result(
         "baselines": sync_baselines(client, baselines),
         "alerts": sync_alerts(client, alerts),
     }
+
+
+def _url_hash(url: str | None) -> str | None:
+    if not url:
+        return None
+    return hashlib.sha256(url.strip().encode()).hexdigest()
+
+
+def sync_market_events(client, events: list[dict[str, Any]]) -> int:
+    """Upsert market events deduped by url_hash."""
+    if not events:
+        return 0
+    synced = 0
+    for event in events:
+        url = event.get("url")
+        url_hash = event.get("url_hash") or _url_hash(url)
+        row: dict[str, Any] = {
+            "title": event["title"],
+            "summary": event.get("summary"),
+            "event_type": event.get("event_type", "news"),
+            "source": event.get("source"),
+            "url": url,
+            "published_at": _parse_ts(event.get("published_at", datetime.now(timezone.utc).isoformat())),
+            "metadata": event.get("metadata", {}),
+        }
+        if url_hash:
+            row["url_hash"] = url_hash
+            client.table("market_events").upsert(row, on_conflict="url_hash").execute()
+        else:
+            client.table("market_events").insert(row).execute()
+        synced += 1
+    return synced
+
+
+def sync_market_quotes(client, quotes: list[dict[str, Any]]) -> int:
+    if not quotes:
+        return 0
+    for quote in quotes:
+        client.table("market_quotes").upsert(
+            {
+                "symbol": quote["symbol"],
+                "name": quote.get("name", quote["symbol"]),
+                "price": quote.get("price"),
+                "change_pct": quote.get("change_pct"),
+                "fetched_at": _parse_ts(quote.get("fetched_at", datetime.now(timezone.utc).isoformat())),
+                "metadata": quote.get("metadata", {}),
+            }
+        ).execute()
+    return len(quotes)
+
+
+def sync_macro_snapshots(client, snapshots: list[dict[str, Any]]) -> int:
+    if not snapshots:
+        return 0
+    for snap in snapshots:
+        client.table("macro_snapshots").upsert(
+            {
+                "series_id": snap["series_id"],
+                "label": snap.get("label", snap["series_id"]),
+                "value": snap.get("value"),
+                "change_pct": snap.get("change_pct"),
+                "fetched_at": _parse_ts(snap.get("fetched_at", datetime.now(timezone.utc).isoformat())),
+            }
+        ).execute()
+    return len(snapshots)
+
+
+def sync_community_signals(client, signals: list[dict[str, Any]]) -> int:
+    if not signals:
+        return 0
+    rows = []
+    for signal in signals:
+        rows.append(
+            {
+                "signal_type": signal["signal_type"],
+                "label": signal["label"],
+                "value": signal.get("value"),
+                "metadata": signal.get("metadata", {}),
+                "fetched_at": _parse_ts(signal.get("fetched_at", datetime.now(timezone.utc).isoformat())),
+            }
+        )
+    client.table("community_signals").insert(rows).execute()
+    return len(rows)
+
+
+def sync_routing_recommendations(client, config: dict[str, Any]) -> int:
+    routes = config.get("routes", [])
+    if not routes:
+        return 0
+    generated_at = datetime.now(timezone.utc).isoformat()
+    projections = config.get("projections", {})
+    count = 0
+    for route in routes:
+        workload_id = route.get("workload_id")
+        if not workload_id:
+            continue
+        client.table("routing_recommendations").insert(
+            {
+                "workload_id": workload_id,
+                "models": route.get("models", []),
+                "projections": projections,
+                "generated_at": generated_at,
+            }
+        ).execute()
+        count += 1
+    return count

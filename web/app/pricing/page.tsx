@@ -44,7 +44,7 @@ export default function PricingPage() {
             <li>◉ Model catalog browse</li>
             <li>◉ 3 watchlist items</li>
             <li>◉ Alerts delayed 24h</li>
-            <li>◉ 7-day price history</li>
+            <li>◉ 90-day price history</li>
           </ul>
           <Link href="/login" className="font-mono text-xs border border-border px-4 py-2 inline-block">
             SIGN IN FREE
